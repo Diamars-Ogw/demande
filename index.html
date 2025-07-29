@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Demande en mariage dev</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffe0ec, #ffc1e3);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #880e4f;
+      text-align: center;
+      margin-bottom: 40px;
+      z-index: 2;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      transition: transform 0.2s;
+      z-index: 2;
+    }
+
+    .yes {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .no {
+      background-color: #f44336;
+      color: white;
+      position: absolute;
+    }
+
+    #popup {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 300px;
+      z-index: 10;
+    }
+
+    #popup h2 {
+      color: #d81b60;
+    }
+
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 5;
+    }
+
+    /* Coeurs animés */
+    .heart {
+      position: absolute;
+      top: -30px;
+      font-size: 24px;
+      animation: fall 5s linear infinite;
+      user-select: none;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Veux-tu m'épouser ? 💍🥺</h1>
+
+  <button class="btn yes" onclick="showPopup()">Oui 😍</button>
+  <button class="btn no" id="noBtn">Non 😤</button>
+
+  <div id="overlay"></div>
+
+  <div id="popup">
+    <h2>Merci ❤️</h2>
+    <p>Merci d’avoir accepté... totalement de ton plein gré. Promis, aucun bouton n’a été truqué 😌❤️.<br/> Tu avais tout le pouvoir de decision sur la demande😌.</p>
+    <p>PS: Le mariage c'est demain, j'ai deja tout organisé, bisous 😌.</p>
+    <button class="btn yes" onclick="hidePopup()">Fermer</button>
+  </div>
+
+  <!-- Cœurs -->
+  <script>
+    const noBtn = document.getElementById('noBtn');
+
+    function randomPosition() {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 100);
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    }
+
+    noBtn.addEventListener('mouseenter', randomPosition);
+    noBtn.addEventListener('click', randomPosition);
+    randomPosition(); // Position initiale
+
+    function showPopup() {
+      document.getElementById('popup').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+    }
+
+    function hidePopup() {
+      document.getElementById('popup').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    // Coeurs qui tombent
+    const emojis = ["❤️", "💖", "💕", "💘", "💝", "😍", "🥺", "😌"];
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 15 + 20) + "px";
+      heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
+
+</body>
+</html>
